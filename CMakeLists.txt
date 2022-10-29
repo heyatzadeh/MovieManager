@@ -8,21 +8,71 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(googletest)
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
-add_executable(MovieManager main.cpp)
+link_directories(
+    3rdParty/Bin
+)
 
-install(TARGETS MovieManager
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+include_directories(
+    3rdParty/Include
+)
 
+file(GLOB movie_data_fetcher_src
+    MovieDataFetcher/*.h
+    MovieDataFetcher/*.cpp
+)
+add_library(
+    MovieDataFetcher
+    STATIC
+    ${movie_data_fetcher_src}
+)
+target_link_libraries(
+    MovieDataFetcher
+
+    optimized libcurl
+    debug libcurl_a_debug
+)
+#find_package(ZLIB REQUIRED)
+#find_package(CURL CONFIG REQUIRED)
+
+#target_link_libraries(MovieDataFetcher PRIVATE CURL::libcurl ZLIB::ZLIB)
+
+file(GLOB tests_src
+    MovieDataFetcherTests/*.h
+    MovieDataFetcherTests/*.cpp
+)
 enable_testing()
 
 add_executable(
-  hello_test
-  hello_test.cpp
+  MovieDataFetcherTests
+  ${tests_src}
 )
 target_link_libraries(
-  hello_test
+  MovieDataFetcherTests
   GTest::gtest_main
+  GTest::gmock
+  MovieDataFetcher
+)
+target_include_directories(
+    MovieDataFetcherTests
+    PRIVATE
+    MovieDataFetcher
 )
 
 include(GoogleTest)
-gtest_discover_tests(hello_test)
+#gtest_discover_tests(MovieDataFetcherTests)
+
+file(GLOB movie_data_fetcher_runner_src
+    MovieDataFetcherRunner/*.h
+    MovieDataFetcherRunner/*.cpp
+)
+add_executable(
+    MovieDataFetcherRunner
+    ${movie_data_fetcher_runner_src}
+)
+target_link_libraries(
+    MovieDataFetcherRunner
+    MovieDataFetcher
+)
+
+install(TARGETS MovieDataFetcherRunner
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
