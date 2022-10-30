@@ -2,6 +2,7 @@
 #include "TheMovieDbDataFactory.h"
 #include "SettableMovieData.h"
 #include "../3rdParty/Include/rapidjson/document.h"
+#include "ErrorParsingMovieDataException.h"
 
 
 TheMovieDbDataFactory::TheMovieDbDataFactory()
@@ -21,7 +22,7 @@ std::shared_ptr<MovieData> TheMovieDbDataFactory::CreateFromJson(const std::stri
 		jsonDocument.Parse(jsonString.c_str());
 		if (!jsonDocument.IsObject())
 		{
-			return std::make_shared<SettableMovieData>();;
+			throw ErrorParsingMovieDataException();
 		}
 
 		auto imdbId = jsonDocument["imdb_id"].GetString();
@@ -39,7 +40,6 @@ std::shared_ptr<MovieData> TheMovieDbDataFactory::CreateFromJson(const std::stri
 	}
 	catch (...)
 	{
+		throw ErrorParsingMovieDataException();
 	}
-
-	return std::make_shared<SettableMovieData>();
 }

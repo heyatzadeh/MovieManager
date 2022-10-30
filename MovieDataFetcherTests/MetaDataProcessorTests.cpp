@@ -2,33 +2,33 @@
 #include <gtest/gtest.h>
 
 #include <vector>
+#include <gmock/gmock-actions.h>
+
 #include "MetaDataProcessor.h"
-#include "MovieData.h"
-#include "TheMovieDbRepository.h"
-#include "ApiKey.h"
-#include "TheMovieDbDataFactory.h"
+#include "FakeLogger.h"
+#include "FakeLoggerFactory.h"
+#include "FakeMovieMetaDataRepository.h"
+#include "MovieNotFoundException.h"
 
 using namespace std;
+using namespace testing;
 
-class MetaDataProcessorTests : public ::testing::Test
+class MetaDataProcessorTests : public Test
 {
-	TheMovieDbDataFactory dataFactory;
-	TheMovieDbRepository* repository;
-	RestApiClient client;
-public:
-	MetaDataProcessorTests() {
-		repository = new TheMovieDbRepository(MY_API_KEY, dataFactory, client);
-	}
+	shared_ptr<FakeLogger> fakeLogger;
+	shared_ptr<FakeLoggerFactory> fakeLoggerFactory;
 
-	~MetaDataProcessorTests() {
-		delete repository;
-	}
 protected:
 	MetaDataProcessor* processor;
+	FakeMovieMetaDataRepository repository;
 
 	virtual void SetUp()
 	{
-		processor = new MetaDataProcessor(*repository);
+		fakeLoggerFactory = make_shared<FakeLoggerFactory>();
+		fakeLogger = make_shared<FakeLogger>();
+		ON_CALL(*fakeLoggerFactory, CreateLogger()).WillByDefault(testing::Return(fakeLogger));
+		
+		processor = new MetaDataProcessor(repository, fakeLoggerFactory);
 	}
 
 	virtual void TearDown()
@@ -45,22 +45,13 @@ TEST_F(MetaDataProcessorTests, ProcessMovies_PassEmptyMovieList_ReturnEmptyResul
 	ASSERT_EQ(0, result.size());
 }
 
-TEST_F(MetaDataProcessorTests, DISABLED_ProcessMovies_PassValidMovie_ReturnMovieData)
+TEST_F(MetaDataProcessorTests, ProcessMovies_ExceptionThrownDuringProcess_WriteToLog)
 {
 	Movies result;
-	processor->ProcessMovies({ "Batman Begins" }, result);
+	MovieNotFoundException testException("My Movie");
+	EXPECT_CALL(repository, FindMovieData(_)).WillRepeatedly(Throw(testException));
 
-	EXPECT_EQ(1, result.size());
-	EXPECT_EQ(result[0]->GetTitle(), "Batman Begins");
-}
+	processor->ProcessMovies({"My Movie"}, result);
 
-TEST_F(MetaDataProcessorTests, DISABLED_ProcessMovies_PassValidMovies_ReturnAllMoviesData)
-{
-	Movies result;
-	processor->ProcessMovies({ "Batman Begins", "Apocalypse Now", "Dumb and Dumber" }, result);
-
-	EXPECT_EQ(3, result.size());
-	EXPECT_EQ(result[0]->GetTitle(), "Batman Begins");
-	EXPECT_EQ(result[1]->GetTitle(), "Apocalypse Now");
-	EXPECT_EQ(result[2]->GetTitle(), "Dumb and Dumber");
+	ASSERT_EQ(0, result.size());
 }

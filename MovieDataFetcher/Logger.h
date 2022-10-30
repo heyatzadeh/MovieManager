@@ -6,6 +6,7 @@
 class Logger 
 {
 public:
+	virtual ~Logger() = default;
 	virtual void LogError(std::string message) = 0;
 };
 
@@ -25,6 +26,8 @@ public:
 class LoggerFactory 
 {
 public:
+	virtual ~LoggerFactory() = default;
+
 	virtual std::shared_ptr<Logger> CreateLogger() 
 	{
 		return std::make_shared<FileLogger>();

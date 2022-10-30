@@ -17,7 +17,7 @@ include_directories(
 )
 
 file(GLOB movie_data_fetcher_src
-#    MovieDataFetcher/*.h
+    MovieDataFetcher/*.h
     MovieDataFetcher/*.cpp
 )
 add_library(
@@ -33,7 +33,7 @@ target_link_libraries(
 )
 
 file(GLOB tests_src
-#    MovieDataFetcherTests/*.h
+    MovieDataFetcherTests/*.h
     MovieDataFetcherTests/*.cpp
 )
 enable_testing()
@@ -58,7 +58,7 @@ include(GoogleTest)
 #gtest_discover_tests(MovieDataFetcherTests)
 
 file(GLOB movie_data_fetcher_runner_src
-#    MovieDataFetcherRunner/*.h
+    MovieDataFetcherRunner/*.h
     MovieDataFetcherRunner/*.cpp
 )
 add_executable(

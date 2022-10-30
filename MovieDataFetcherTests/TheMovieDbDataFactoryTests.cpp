@@ -1,3 +1,4 @@
+#include "ErrorParsingMovieDataException.h"
 #include "TheMovieDbDataFactory.h"
 #include "gtest/gtest.h"
 
@@ -5,13 +6,7 @@ TEST(TheMovieDbDataFactoryTests, CreateFromJson_PassEmptyString_ReturnEmptyClass
 {
     TheMovieDbDataFactory factory;
 
-    auto result = factory.CreateFromJson("");
-
-    EXPECT_EQ(result->GetTitle(), "");
-    EXPECT_EQ(result->GetActors().size(), 0);
-    EXPECT_EQ(result->GetImdbId(), "");
-    EXPECT_EQ(result->GetLengthMin(), 0);
-    EXPECT_EQ(result->GetPlot(), "");
+    ASSERT_THROW(factory.CreateFromJson(""), ErrorParsingMovieDataException);
 }
 
 TEST(TheMovieDbDataFactoryTests, CreateFromJson_PassValidString_ReturnMovieDetails)
