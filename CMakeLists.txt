@@ -17,7 +17,7 @@ include_directories(
 )
 
 file(GLOB movie_data_fetcher_src
-    MovieDataFetcher/*.h
+#    MovieDataFetcher/*.h
     MovieDataFetcher/*.cpp
 )
 add_library(
@@ -29,15 +29,11 @@ target_link_libraries(
     MovieDataFetcher
 
     optimized libcurl
-    debug libcurl_a_debug
+    debug libcurl-d
 )
-#find_package(ZLIB REQUIRED)
-#find_package(CURL CONFIG REQUIRED)
-
-#target_link_libraries(MovieDataFetcher PRIVATE CURL::libcurl ZLIB::ZLIB)
 
 file(GLOB tests_src
-    MovieDataFetcherTests/*.h
+#    MovieDataFetcherTests/*.h
     MovieDataFetcherTests/*.cpp
 )
 enable_testing()
@@ -62,7 +58,7 @@ include(GoogleTest)
 #gtest_discover_tests(MovieDataFetcherTests)
 
 file(GLOB movie_data_fetcher_runner_src
-    MovieDataFetcherRunner/*.h
+#    MovieDataFetcherRunner/*.h
     MovieDataFetcherRunner/*.cpp
 )
 add_executable(

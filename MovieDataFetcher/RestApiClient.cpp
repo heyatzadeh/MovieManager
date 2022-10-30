@@ -31,7 +31,7 @@ string RestApiClient::HttpGet(string& url)
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curl_write);
-    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "{}");
+    //    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "{}");
     CURLcode res = curl_easy_perform(curl);
     curl_easy_cleanup(curl);
 
