@@ -15,18 +15,18 @@ using namespace testing;
 
 class MetaDataProcessorTests : public Test
 {
-	shared_ptr<FakeLogger> fakeLogger;
 	shared_ptr<FakeLoggerFactory> fakeLoggerFactory;
 
 protected:
+	shared_ptr<FakeLogger> fakeLogger;
 	MetaDataProcessor* processor;
 	FakeMovieMetaDataRepository repository;
 
 	virtual void SetUp()
 	{
-		fakeLoggerFactory = make_shared<FakeLoggerFactory>();
+		fakeLoggerFactory = make_shared<NiceMock<FakeLoggerFactory>>();
 		fakeLogger = make_shared<FakeLogger>();
-		ON_CALL(*fakeLoggerFactory, CreateLogger()).WillByDefault(testing::Return(fakeLogger));
+		ON_CALL(*fakeLoggerFactory, CreateLogger()).WillByDefault(Return(fakeLogger));
 		
 		processor = new MetaDataProcessor(repository, fakeLoggerFactory);
 	}
@@ -50,6 +50,7 @@ TEST_F(MetaDataProcessorTests, ProcessMovies_ExceptionThrownDuringProcess_WriteT
 	Movies result;
 	MovieNotFoundException testException("My Movie");
 	EXPECT_CALL(repository, FindMovieData(_)).WillRepeatedly(Throw(testException));
+	EXPECT_CALL(*fakeLogger, LogError("My Movie")).Times(AtLeast(1));
 
 	processor->ProcessMovies({"My Movie"}, result);
 
