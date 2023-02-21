@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "JsonHelper.h"
 #include "InvalidInputException.h"
 #include "MovieNotFoundException.h"

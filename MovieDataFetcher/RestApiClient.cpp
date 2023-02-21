@@ -1,6 +1,5 @@
 #include "RestApiClient.h"
 #include "../3rdParty/Include/curl/curl.h"
-#include "stdafx.h"
 
 using namespace std;
 

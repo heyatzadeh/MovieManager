@@ -1,5 +1,4 @@
-﻿#include "stdafx.h"
-#include <gtest/gtest.h>
+﻿#include <gtest/gtest.h>
 #include "JsonHelper.h"
 #include "MovieNotFoundException.h"
 #include "InvalidInputException.h"

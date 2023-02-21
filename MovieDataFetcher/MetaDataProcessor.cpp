@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "MetaDataProcessor.h"
 #include "MovieData.h"
 #include <fstream>

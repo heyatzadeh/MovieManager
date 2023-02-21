@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "TheMovieDbDataFactory.h"
 #include "SettableMovieData.h"
 #include "../3rdParty/Include/rapidjson/document.h"

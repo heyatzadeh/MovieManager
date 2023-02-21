@@ -5,7 +5,7 @@ project(MovieManager LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_subdirectory(googletest)
+add_subdirectory(3rdParty/googletest)
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 link_directories(
@@ -55,7 +55,7 @@ target_include_directories(
 )
 
 include(GoogleTest)
-#gtest_discover_tests(MovieDataFetcherTests)
+gtest_discover_tests(MovieDataFetcherTests)
 
 file(GLOB movie_data_fetcher_runner_src
     MovieDataFetcherRunner/*.h

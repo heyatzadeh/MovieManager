@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "FileErrorRepository.h"
 #include <fstream>
 
