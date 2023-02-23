@@ -45,8 +45,32 @@ TEST_P(StringHtmlEncoderTests, EncodeStringToHtml)
 	ASSERT_EQ(row.expected, result);
 }
 
-INSTANTIATE_TEST_CASE_P(WhiteSpaceEncoding, StringHtmlEncoderTests, ::testing::Values(
+INSTANTIATE_TEST_SUITE_P(WhiteSpaceEncoding, StringHtmlEncoderTests, ::testing::Values(
 	EncoderTestRow("A", "A"),
 	EncoderTestRow("A B", "A%2fB"),
 	EncoderTestRow("A B C D", "A%2fB%2fC%2fD")
 ));
+
+
+
+// Define a parameter generator that generates test parameters
+std::vector<int> test_data = {1, 2, 3, 4, 5};
+class TestParamGenerator : public ::testing::TestWithParam<int> {};
+
+// Instantiate the parameter generator with the test data
+INSTANTIATE_TEST_SUITE_P(TestData, TestParamGenerator, ::testing::ValuesIn(test_data));
+
+// Define the test case using the generated parameter
+TEST_P(TestParamGenerator, TestFunction) {
+        int param_value = GetParam();
+        // ... perform test using param_value ...
+        EXPECT_EQ(param_value, param_value); // Example test assertion
+}
+
+TEST(IteratorTest, TestFunction) {
+        // Use a range-based for loop to iterate over the test data
+        for (const auto& param_value : ::testing::ValuesIn(test_data.begin(), test_data.end())) {
+          // ... perform test using param_value ...
+          EXPECT_EQ(param_value, param_value); // Example test assertion
+        }
+}
