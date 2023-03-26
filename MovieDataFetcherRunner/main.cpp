@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fmt/format.h>
 
 #include "../MovieDataFetcher/MetaDataProcessor.h"
 #include "../MovieDataFetcher/RestApiClient.h"
@@ -14,14 +15,13 @@ int main()
     MetaDataProcessor processor(repository);
 
     Movies result;
-    processor.ProcessMovies({"Batman Begins"}, result);
+    processor.ProcessMovies({"Batman Begins", "Spider-man"}, result);
 
-    for (auto movie : result)
+    for (const auto& movie : result)
     {
-        std::cout << "Title: " << movie->GetTitle() << std::endl;
-        std::cout << "IMDB Id: " << movie->GetImdbId() << std::endl << std::endl;
-        std::cout << movie->GetPlot() << std::endl << std::endl;
-        std::cout << "Length (min.) " << movie->GetLengthMin() << std::endl << std::endl;
+        auto output = fmt::format("Title: {}\nIMDB Id: {}\n\n{}\n\nLength (min.) {}\n\n",
+                                  movie->GetTitle(),movie->GetImdbId(),movie->GetPlot(),movie->GetLengthMin());
+        std::cout << output;
         std::cout << "----------------------------------------" << std::endl;
     }
 
