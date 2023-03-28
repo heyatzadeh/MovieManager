@@ -8,23 +8,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(ENABLE_TESTING "Whether to enable unit testing build" ON)
 
-add_git_submodule(3rdParty/curl)
-add_git_submodule(3rdParty/googletest)
-
-
-FETCHCONTENT_DECLARE(
-        fmt
-        GIT_REPOSITORY https://github.com/fmtlib/fmt
-        GIT_TAG 9.1.0
-)
-FETCHCONTENT_MAKEAVAILABLE(fmt)
-#FETCHCONTENT_DECLARE(
-#        spdlog
-#        GIT_REPOSITORY https://github.com/gabime/spdlog
-#        GIT_TAG 1.11.0
-#)
-#FETCHCONTENT_MAKEAVAILABLE(spdlog)
-
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
 include(AddGitSubmodule)
 #include(FetchContent)

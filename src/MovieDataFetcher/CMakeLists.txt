@@ -8,6 +8,7 @@ add_library(MovieDataFetcher STATIC
 
 target_include_directories(MovieDataFetcher PUBLIC
         "./"
+        "../../3rdParty/Include"
         )
 
 target_link_libraries(MovieDataFetcher PRIVATE
