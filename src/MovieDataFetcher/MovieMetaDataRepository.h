@@ -3,10 +3,9 @@
 #include "MovieData.h"
 #include <memory>
 
-class MovieMetaDataRepository
-{
+class MovieMetaDataRepository {
 public:
-	virtual ~MovieMetaDataRepository() = default;
+    virtual ~MovieMetaDataRepository() = default;
 
-	virtual std::shared_ptr<MovieData> FindMovieData(const std::string& movieName) = 0;
+    virtual std::shared_ptr<MovieData> FindMovieData(const std::string &movieName) = 0;
 };

@@ -1,10 +1,10 @@
 #pragma once
+
 #include <string>
 
-class ErrorRepository
-{
+class ErrorRepository {
 public:
-	virtual ~ErrorRepository() = default;
+    virtual ~ErrorRepository() = default;
 
-	virtual void LogBadMovie(std::string movieName) = 0;
+    virtual void LogBadMovie(std::string movieName) = 0;
 };

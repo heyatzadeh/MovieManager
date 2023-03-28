@@ -6,20 +6,18 @@
 #include "TheMovieDbRepository.h"
 #include "config.hpp"
 
-int main()
-{
+int main() {
     TheMovieDbDataFactory dataFactory;
     RestApiClient client;
     TheMovieDbRepository repository(MY_API_KEY, dataFactory, client);
     MetaDataProcessor processor(repository);
 
-    std::cout << project_name << '\t' <<  project_version << std::endl;
+    std::cout << project_name << '\t' << project_version << std::endl;
 
     Movies result;
     processor.ProcessMovies({"Batman Begins", "Spider-man"}, result);
 
-    for (const auto& movie : result)
-    {
+    for (const auto &movie: result) {
         std::cout << "Title: " << movie->GetTitle() << std::endl;
         std::cout << "IMDB Id: " << movie->GetImdbId() << std::endl << std::endl;
         std::cout << movie->GetPlot() << std::endl << std::endl;

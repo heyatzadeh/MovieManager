@@ -1,12 +1,13 @@
 #pragma once
+
 #include <exception>
 #include <string>
 
-class MovieNotFoundException : public std::exception
-{
-	const std::string m_movieName;
+class MovieNotFoundException : public std::exception {
+    const std::string m_movieName;
 
 public:
-	MovieNotFoundException(const std::string& movieName): m_movieName(movieName){}
-	std::string GetMovieName() const{ return m_movieName; }
+    MovieNotFoundException(const std::string &movieName) : m_movieName(movieName) {}
+
+    std::string GetMovieName() const { return m_movieName; }
 };

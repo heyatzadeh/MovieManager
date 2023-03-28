@@ -8,17 +8,15 @@ RestApiClient::RestApiClient() {}
 RestApiClient::~RestApiClient() {}
 
 string buffer;
-size_t curl_write(void* ptr, size_t size, size_t nmemb, void* stream)
-{
-    buffer.append(static_cast<char*>(ptr), size * nmemb);
+
+size_t curl_write(void *ptr, size_t size, size_t nmemb, void *stream) {
+    buffer.append(static_cast<char *>(ptr), size * nmemb);
     return size * nmemb;
 }
 
-string RestApiClient::HttpGet(string& url)
-{
-    CURL* curl = curl_easy_init();
-    if (!curl)
-    {
+string RestApiClient::HttpGet(string &url) {
+    CURL *curl = curl_easy_init();
+    if (!curl) {
         // TODO: handle error
         curl_easy_cleanup(curl);
         return "";
@@ -34,8 +32,7 @@ string RestApiClient::HttpGet(string& url)
     CURLcode res = curl_easy_perform(curl);
     curl_easy_cleanup(curl);
 
-    if (res != CURLE_OK)
-    {
+    if (res != CURLE_OK) {
         // TODO: handle error
 
         return "";
