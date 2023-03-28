@@ -11,6 +11,7 @@ option(ENABLE_TESTING "Whether to enable unit testing build" ON)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
 include(AddGitSubmodule)
 #include(FetchContent)
+include(Docs)
 
 add_git_submodule(3rdParty/googletest)
 add_git_submodule(3rdParty/curl)
