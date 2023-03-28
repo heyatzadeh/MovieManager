@@ -1,12 +1,12 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.16)
 
-project(MovieManager LANGUAGES C CXX)
+project(MovieManager VERSION 1.1.0 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_subdirectory(3rdParty/googletest)
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+option(ENABLE_TESTING "Whether to enable unit testing build" ON)
 
 link_directories(
     3rdParty/Bin
@@ -16,59 +16,21 @@ include_directories(
     3rdParty/Include
 )
 
-file(GLOB movie_data_fetcher_src
-    MovieDataFetcher/*.h
-    MovieDataFetcher/*.cpp
-)
-add_library(
-    MovieDataFetcher
-    STATIC
-    ${movie_data_fetcher_src}
-)
-target_link_libraries(
-    MovieDataFetcher
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
+include(AddGitSubmodule)
+#include(FetchContent)
 
-    optimized libcurl
-    debug libcurl-d
-)
+add_git_submodule(3rdParty/googletest)
+add_git_submodule(3rdParty/curl)
 
-file(GLOB tests_src
-    MovieDataFetcherTests/*.h
-    MovieDataFetcherTests/*.cpp
-)
-enable_testing()
+#FetchContent_Declare(
+#        libcurl
+#        GIT_REPOSITORY https://github.com/curl/curl.git
+#        GIT_TAG curl-8_0_1
+#)
+#FetchContent_MakeAvailable(libcurl)
 
-add_executable(
-  MovieDataFetcherTests
-  ${tests_src}
-)
-target_link_libraries(
-  MovieDataFetcherTests
-  GTest::gtest_main
-  GTest::gmock
-  MovieDataFetcher
-)
-target_include_directories(
-    MovieDataFetcherTests
-    PRIVATE
-    MovieDataFetcher
-)
-
-include(GoogleTest)
-gtest_discover_tests(MovieDataFetcherTests)
-
-file(GLOB movie_data_fetcher_runner_src
-    MovieDataFetcherRunner/*.h
-    MovieDataFetcherRunner/*.cpp
-)
-add_executable(
-    MovieDataFetcherRunner
-    ${movie_data_fetcher_runner_src}
-)
-target_link_libraries(
-    MovieDataFetcherRunner
-    MovieDataFetcher
-)
-
-install(TARGETS MovieDataFetcherRunner
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+add_subdirectory(configured)
+add_subdirectory(src)
+add_subdirectory(tests)
+add_subdirectory(app)

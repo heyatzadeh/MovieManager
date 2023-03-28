@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "../MovieDataFetcher/MetaDataProcessor.h"
-#include "../MovieDataFetcher/RestApiClient.h"
-#include "../MovieDataFetcher/TheMovieDbDataFactory.h"
-#include "../MovieDataFetcher/TheMovieDbRepository.h"
-#include "../MovieDataFetcherTests/ApiKey.h"
+#include "MetaDataProcessor.h"
+#include "RestApiClient.h"
+#include "TheMovieDbDataFactory.h"
+#include "TheMovieDbRepository.h"
+#include "config.hpp"
 
 int main()
 {
@@ -13,10 +13,12 @@ int main()
     TheMovieDbRepository repository(MY_API_KEY, dataFactory, client);
     MetaDataProcessor processor(repository);
 
+    std::cout << project_name << '\t' <<  project_version << std::endl;
+
     Movies result;
     processor.ProcessMovies({"Batman Begins"}, result);
 
-    for (auto movie : result)
+    for (const auto& movie : result)
     {
         std::cout << "Title: " << movie->GetTitle() << std::endl;
         std::cout << "IMDB Id: " << movie->GetImdbId() << std::endl << std::endl;

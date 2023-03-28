@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../3rdParty/Include/rapidjson/document.h"
+#include "rapidjson/document.h"
 
 class JsonHelper
 {

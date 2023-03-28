@@ -1,6 +1,6 @@
 #include "TheMovieDbDataFactory.h"
 #include "SettableMovieData.h"
-#include "../3rdParty/Include/rapidjson/document.h"
+#include "rapidjson/document.h"
 #include "ErrorParsingMovieDataException.h"
 
 

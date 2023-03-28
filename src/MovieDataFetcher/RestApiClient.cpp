@@ -1,5 +1,5 @@
 #include "RestApiClient.h"
-#include "../3rdParty/Include/curl/curl.h"
+#include "curl/curl.h"
 
 using namespace std;
 
