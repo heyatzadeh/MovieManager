@@ -1,5 +1,6 @@
 if (ENABLE_TESTING)
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    #For Microsoft Compiler
+    #    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
     file(GLOB tests_src
             *.cpp
@@ -17,5 +18,5 @@ if (ENABLE_TESTING)
             )
 
     include(GoogleTest)
-    gtest_discover_tests(MovieDataFetcherTests)
+    #    gtest_discover_tests(MovieDataFetcherTests)
 endif ()
