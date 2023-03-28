@@ -16,7 +16,7 @@ int main()
     std::cout << project_name << '\t' <<  project_version << std::endl;
 
     Movies result;
-    processor.ProcessMovies({"Batman Begins"}, result);
+    processor.ProcessMovies({"Batman Begins", "Spider-man"}, result);
 
     for (const auto& movie : result)
     {
