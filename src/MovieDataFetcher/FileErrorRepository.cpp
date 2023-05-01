@@ -3,10 +3,12 @@
 
 using namespace std;
 
-void FileErrorRepository::LogBadMovie(std::string movieName) {
+void FileErrorRepository::LogBadMovie(std::string movieName)
+{
     ofstream errorLogFile;
     errorLogFile.open(m_fileName, ios::out);
-    if (!errorLogFile.is_open()) {
+    if (!errorLogFile.is_open())
+    {
         // TODO: handle error
     }
 

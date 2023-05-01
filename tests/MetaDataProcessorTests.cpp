@@ -1,26 +1,28 @@
 #include <gtest/gtest.h>
 
-#include <vector>
 #include <gmock/gmock-actions.h>
+#include <vector>
 
-#include "MetaDataProcessor.h"
 #include "FakeLogger.h"
 #include "FakeLoggerFactory.h"
 #include "FakeMovieMetaDataRepository.h"
+#include "MetaDataProcessor.h"
 #include "MovieNotFoundException.h"
 
 using namespace std;
 using namespace testing;
 
-class MetaDataProcessorTests : public Test {
+class MetaDataProcessorTests : public Test
+{
     shared_ptr<FakeLoggerFactory> fakeLoggerFactory;
 
 protected:
     shared_ptr<FakeLogger> fakeLogger;
-    MetaDataProcessor *processor;
+    MetaDataProcessor* processor;
     FakeMovieMetaDataRepository repository;
 
-    virtual void SetUp() {
+    virtual void SetUp()
+    {
         fakeLoggerFactory = make_shared<NiceMock<FakeLoggerFactory>>();
         fakeLogger = make_shared<FakeLogger>();
         ON_CALL(*fakeLoggerFactory, CreateLogger()).WillByDefault(Return(fakeLogger));
@@ -28,19 +30,22 @@ protected:
         processor = new MetaDataProcessor(repository, fakeLoggerFactory);
     }
 
-    virtual void TearDown() {
+    virtual void TearDown()
+    {
         delete processor;
     }
 };
 
-TEST_F(MetaDataProcessorTests, ProcessMovies_PassEmptyMovieList_ReturnEmptyResult) {
+TEST_F(MetaDataProcessorTests, ProcessMovies_PassEmptyMovieList_ReturnEmptyResult)
+{
     Movies result;
     processor->ProcessMovies({}, result);
 
     ASSERT_EQ(0, result.size());
 }
 
-TEST_F(MetaDataProcessorTests, ProcessMovies_ExceptionThrownDuringProcess_WriteToLog) {
+TEST_F(MetaDataProcessorTests, ProcessMovies_ExceptionThrownDuringProcess_WriteToLog)
+{
     Movies result;
     MovieNotFoundException testException("My Movie");
     EXPECT_CALL(repository, FindMovieData(_)).WillRepeatedly(Throw(testException));

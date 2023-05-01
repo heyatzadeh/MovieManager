@@ -2,7 +2,8 @@
 
 #include <string>
 
-class RestApiClient {
+class RestApiClient
+{
 public:
     RestApiClient();
 
@@ -13,5 +14,5 @@ public:
      * @param url
      * @return std::string html response
      */
-    virtual std::string HttpGet(std::string &url);
+    virtual std::string HttpGet(std::string& url);
 };

@@ -2,7 +2,8 @@
 
 #include <string>
 
-class ErrorRepository {
+class ErrorRepository
+{
 public:
     virtual ~ErrorRepository() = default;
 

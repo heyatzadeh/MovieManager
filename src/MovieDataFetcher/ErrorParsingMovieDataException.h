@@ -2,7 +2,8 @@
 
 #include <exception>
 
-class ErrorParsingMovieDataException : public std::exception {
+class ErrorParsingMovieDataException : public std::exception
+{
 public:
     ErrorParsingMovieDataException() {}
 };

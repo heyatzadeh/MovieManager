@@ -1,15 +1,17 @@
 #pragma once
 
-#include <vector>
 #include <string>
+#include <vector>
 
-class MovieData {
+class MovieData
+{
     std::string m_id;
     std::string m_title;
     std::string m_posterUrl;
     unsigned m_length;
     std::vector<std::string> m_actors;
     std::string m_plot;
+
 protected:
     virtual void SetImdbId(std::string id) { m_id = id; }
 
@@ -36,4 +38,3 @@ public:
 
     std::string GetPlot() const { return m_plot; }
 };
-

@@ -2,30 +2,36 @@
 #include "MovieData.h"
 #include <fstream>
 
-MetaDataProcessor::MetaDataProcessor(MovieMetaDataRepository &repository) :
-        MetaDataProcessor(repository, std::make_shared<LoggerFactory>()) {
+MetaDataProcessor::MetaDataProcessor(MovieMetaDataRepository& repository) : MetaDataProcessor(repository, std::make_shared<LoggerFactory>())
+{
 }
 
-MetaDataProcessor::MetaDataProcessor(MovieMetaDataRepository &respository, std::shared_ptr<LoggerFactory> loggerFactory)
-        : m_repository(respository), m_loggerFactory(loggerFactory) {
-
+MetaDataProcessor::MetaDataProcessor(MovieMetaDataRepository& respository, std::shared_ptr<LoggerFactory> loggerFactory)
+    : m_repository(respository), m_loggerFactory(loggerFactory)
+{
 }
 
-MetaDataProcessor::~MetaDataProcessor() {
+MetaDataProcessor::~MetaDataProcessor()
+{
 }
 
-void MetaDataProcessor::ProcessMovies(const std::vector<std::string> &movieNames, Movies &result) {
-    if (movieNames.size() == 0) {
+void MetaDataProcessor::ProcessMovies(const std::vector<std::string>& movieNames, Movies& result)
+{
+    if (movieNames.size() == 0)
+    {
         return;
     }
 
-    for (auto movieName: movieNames) {
-        try {
+    for (auto movieName : movieNames)
+    {
+        try
+        {
             std::shared_ptr<MovieData> movieData = m_repository.FindMovieData(movieName);
 
             result.push_back(movieData);
         }
-        catch (...) {
+        catch (...)
+        {
             auto logger = m_loggerFactory->CreateLogger();
 
             logger->LogError(movieName);

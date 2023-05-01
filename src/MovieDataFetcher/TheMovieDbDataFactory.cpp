@@ -1,21 +1,24 @@
 #include "TheMovieDbDataFactory.h"
+#include "ErrorParsingMovieDataException.h"
 #include "SettableMovieData.h"
 #include "rapidjson/document.h"
-#include "ErrorParsingMovieDataException.h"
 
-
-TheMovieDbDataFactory::TheMovieDbDataFactory() {
+TheMovieDbDataFactory::TheMovieDbDataFactory()
+{
 }
 
-
-TheMovieDbDataFactory::~TheMovieDbDataFactory() {
+TheMovieDbDataFactory::~TheMovieDbDataFactory()
+{
 }
 
-std::shared_ptr<MovieData> TheMovieDbDataFactory::CreateFromJson(const std::string &jsonString) const {
-    try {
+std::shared_ptr<MovieData> TheMovieDbDataFactory::CreateFromJson(const std::string& jsonString) const
+{
+    try
+    {
         rapidjson::Document jsonDocument;
         jsonDocument.Parse(jsonString.c_str());
-        if (!jsonDocument.IsObject()) {
+        if (!jsonDocument.IsObject())
+        {
             throw ErrorParsingMovieDataException();
         }
 
@@ -32,7 +35,8 @@ std::shared_ptr<MovieData> TheMovieDbDataFactory::CreateFromJson(const std::stri
 
         return result;
     }
-    catch (...) {
+    catch (...)
+    {
         throw ErrorParsingMovieDataException();
     }
 }

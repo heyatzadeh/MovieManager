@@ -2,14 +2,19 @@
 #include "TheMovieDbDataFactory.h"
 #include "gtest/gtest.h"
 
-TEST(TheMovieDbDataFactoryTests, CreateFromJson_PassEmptyString_ReturnEmptyClass) {
+TEST(TheMovieDbDataFactoryTests,
+     CreateFromJson_PassEmptyString_ReturnEmptyClass)
+{
     TheMovieDbDataFactory factory;
 
     ASSERT_THROW(factory.CreateFromJson(""), ErrorParsingMovieDataException);
 }
 
-TEST(TheMovieDbDataFactoryTests, CreateFromJson_PassValidString_ReturnMovieDetails) {
-    std::string input = "{\"id\":284052,\"imdb_id\":\"tt1211837\",\"overview\":\"The movie's plot\",\"title\":\"a movie\",\"runtime\":115}";
+TEST(TheMovieDbDataFactoryTests,
+     CreateFromJson_PassValidString_ReturnMovieDetails)
+{
+    std::string input =
+        R"({"id":284052,"imdb_id":"tt1211837","overview":"The movie's plot","title":"a movie","runtime":115})";
 
     TheMovieDbDataFactory factory;
 
