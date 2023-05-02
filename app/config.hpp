@@ -1,8 +1,8 @@
 #pragma once
 
 #include <cstdint>
-#include <string>
 #include <string_view>
+#include <string>
 
 static constexpr std::string_view project_name = "MovieManager";
 static constexpr std::string_view project_version = "1.1.0";

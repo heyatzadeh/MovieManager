@@ -11,6 +11,30 @@ TheMovieDbDataFactory::~TheMovieDbDataFactory()
 {
 }
 
+void TheMovieDbDataFactory::GetActors(const std::string& jsonString, std::vector<std::string>& result) const
+{
+    rapidjson::Document jsonDocument;
+    jsonDocument.Parse(jsonString.c_str());
+    if (!jsonDocument.IsObject())
+    {
+        throw ErrorParsingMovieDataException();
+    }
+
+    try
+    {
+        auto cast = jsonDocument["cast"].GetArray();
+        for (auto& actor : cast)
+        {
+            auto name = actor["name"].GetString();
+            result.push_back(name);
+        }
+    }
+    catch (...)
+    {
+        throw ErrorParsingMovieDataException();
+    }
+}
+
 std::shared_ptr<MovieData> TheMovieDbDataFactory::CreateFromJson(const std::string& jsonString) const
 {
     try

@@ -1,6 +1,5 @@
-#include <gtest/gtest.h>
-
 #include <gmock/gmock-actions.h>
+#include <gtest/gtest.h>
 #include <vector>
 
 #include "FakeLogger.h"
